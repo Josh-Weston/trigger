@@ -11,6 +11,9 @@
     "typescript"
   ],
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Josh Weston",
   "license": "MIT",
   "main": "lib/index.js",
