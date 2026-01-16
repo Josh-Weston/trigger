@@ -8,7 +8,7 @@ const errorStyling = `
 
 function logError(error: string) {
     console.log(
-        `%c⚡Error in @datahook/trigger: %c${error}`,
+        `%c⚡Error in @jweston/trigger: %c${error}`,
         `${errorStyling} border-left: 1px solid yellow; color: red; font-weight: bold`,
         `${errorStyling} color: white`,
     );
@@ -16,14 +16,14 @@ function logError(error: string) {
 
 function logWarning(error: string) {
     console.log(
-        `%c⚡Warning in @datahook/trigger: %c${error}`,
+        `%c⚡Warning in @jweston/trigger: %c${error}`,
         `${errorStyling} border-left: 1px solid yellow; color: yellow; font-weight: bold`,
         `${errorStyling} color: white`,
     );
 }
 
 function newError(error: string): Error {
-    return new Error(`⚡Error in @datahook/trigger: ${error}`);
+    return new Error(`⚡Error in @jweston/trigger: ${error}`);
 }
 
 function logAndThrowError(error: string) {
@@ -56,14 +56,14 @@ type SingleSubscribe<T> = (v: T) => void;
 type AllowedPrimitives<T> = T extends string
     ? string
     : T extends number
-      ? number
-      : T extends boolean
-        ? boolean
-        : T extends Date
-          ? Date
-          : T extends null
-            ? null
-            : never;
+    ? number
+    : T extends boolean
+    ? boolean
+    : T extends Date
+    ? Date
+    : T extends null
+    ? null
+    : never;
 
 type IsAllowedObject<T> = T extends NewableFunction | CallableFunction | Map<unknown, unknown> | Set<unknown> | WeakMap<object, unknown> | WeakSet<object>
     ? false
@@ -71,12 +71,12 @@ type IsAllowedObject<T> = T extends NewableFunction | CallableFunction | Map<unk
 
 type AllowedType2<T> =
     T extends AllowedPrimitives<T>
-        ? T
-        : T extends Array<infer U>
-          ? Array<AllowedType2<U>> // Note: UserRow<T> also works here
-          : IsAllowedObject<T> extends false
-            ? 'Functions, Maps, Sets, WeakMaps, and WeakSets are not allowed types in Trigger'
-            : UserRow<T>; // recursive
+    ? T
+    : T extends Array<infer U>
+    ? Array<AllowedType2<U>> // Note: UserRow<T> also works here
+    : IsAllowedObject<T> extends false
+    ? 'Functions, Maps, Sets, WeakMaps, and WeakSets are not allowed types in Trigger'
+    : UserRow<T>; // recursive
 
 // To avoid allowing symbols, something like: type UserRow<T extends Record<string, unknown>> is required, but it causes a lot of type issues at the moment
 type UserRow<T> = {

@@ -1,5 +1,5 @@
 {
-  "name": "@datahook/trigger",
+  "name": "@jweston/trigger",
   "version": "0.21.0",
   "description": "⚡Data-oriented state management for React",
   "keywords": [
@@ -36,10 +36,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/datahookinc/trigger.git"
+    "url": "https://github.com/josh-weston/trigger.git"
   },
-  "bugs": "https://github.com/datahookinc/trigger/issues",
-  "homepage": "https://trigger.datahook.ca",
+  "bugs": "https://github.com/josh-weston/trigger/issues",
+  "homepage": "https://trigger.joshweston.ca",
   "files": [
     "lib/**/*"
   ],

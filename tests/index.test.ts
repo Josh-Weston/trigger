@@ -549,7 +549,7 @@ describe('Testing error messages', () => {
             CreateTable({});
         } catch (err: unknown) {
             const errMessage = err as Error;
-            expect(errMessage.message).toBe(`⚡Error in @datahook/trigger: invalid initial arguments when creating table; cannot create an empty table`);
+            expect(errMessage.message).toBe(`⚡Error in @jweston/trigger: invalid initial arguments when creating table; cannot create an empty table`);
         }
     });
     it('should return the proper error message when creating a table with mismatched column lengths', () => {
@@ -557,7 +557,7 @@ describe('Testing error messages', () => {
             CreateTable({ name: [1, 2, 3], age: [1, 2] });
         } catch (err: unknown) {
             const errMessage = err as Error;
-            expect(errMessage.message).toBe(`⚡Error in @datahook/trigger: invalid initial arguments when creating table; column "age" has improper length of 2, which does not match the length of the other columns provided`);
+            expect(errMessage.message).toBe(`⚡Error in @jweston/trigger: invalid initial arguments when creating table; column "age" has improper length of 2, which does not match the length of the other columns provided`);
         }
     });
     it('should return the proper error message when attempting to insert a row with properties not found in the table', () => {
@@ -568,7 +568,7 @@ describe('Testing error messages', () => {
             table.insertOne({ name: "a", age: 10, gender: "m" } as any);
         } catch (err: unknown) {
             const errMessage = err as Error;
-            expect(errMessage.message).toBe(`⚡Error in @datahook/trigger: attempting to insert value into column "gender", which does not exist in table`);
+            expect(errMessage.message).toBe(`⚡Error in @jweston/trigger: attempting to insert value into column "gender", which does not exist in table`);
         }
     });
     it('should return the proper error message when attempting to insert a row without including all properties of the table', () => {
@@ -579,7 +579,7 @@ describe('Testing error messages', () => {
             table.insertOne({ name: "a" } as any);
         } catch (err: unknown) {
             const errMessage = err as Error;
-            expect(errMessage.message).toBe(`⚡Error in @datahook/trigger: did not provide column "age" when attempting to insert row into table`);
+            expect(errMessage.message).toBe(`⚡Error in @jweston/trigger: did not provide column "age" when attempting to insert row into table`);
         }
     });
     it('should return the proper error message when attempting to insert rows with properties not found in the table', () => {
@@ -590,7 +590,7 @@ describe('Testing error messages', () => {
             table.insertMany([{ name: "a", age: 10, gender: "m" } as any]);
         } catch (err: unknown) {
             const errMessage = err as Error;
-            expect(errMessage.message).toBe(`⚡Error in @datahook/trigger: attempting to insert value into column "gender", which does not exist in table`);
+            expect(errMessage.message).toBe(`⚡Error in @jweston/trigger: attempting to insert value into column "gender", which does not exist in table`);
         }
     });
     it('should return the proper error message when attempting to insert rows without including all properties of the table', () => {
@@ -600,7 +600,7 @@ describe('Testing error messages', () => {
             table.insertMany([{ name: "a" } as any]);
         } catch (err: unknown) {
             const errMessage = err as Error;
-            expect(errMessage.message).toBe(`⚡Error in @datahook/trigger: did not provide column "age" when attempting to insert row into table`);
+            expect(errMessage.message).toBe(`⚡Error in @jweston/trigger: did not provide column "age" when attempting to insert row into table`);
         }
     });
 });
