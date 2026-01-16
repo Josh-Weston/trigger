@@ -1,7 +1,7 @@
 # Welcome to Trigger! <span><img width="28" height="28" src="lightning.png" alt="Lightning Bolt" /></span>
 
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/%40jweston%2Ftrigger)
-![NPM Version](https://img.shields.io/npm/v/%4jwestonk%2Ftrigger)
+![NPM Version](https://img.shields.io/npm/v/%4jweston%2Ftrigger)
 ![NPM Downloads](https://img.shields.io/npm/dt/%40jweston%2Ftrigger)
 ![NPM License](https://img.shields.io/npm/l/%40jweston%2Ftrigger)
 
