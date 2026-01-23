@@ -12,7 +12,6 @@ This will run the following scripts:
 - `version`
 - `postversion`
 
-
 ## Publish package
 
 This will run the following scripts:
@@ -23,3 +22,7 @@ This will run the following scripts:
 - `prepublishOnly`
 
 Note: if asked for a one-time password, it is from your authenticator app
+
+## View eslint configuration dashboard
+
+`npx eslint --inspect-config`
