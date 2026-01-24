@@ -20,20 +20,25 @@ export default [
 
   // Custom Rules & Settings
   {
-    files: ['**/*.{ts}'],
+    files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
       globals: globals.browser,
     },
 
     rules: {
       'no-shadow': 'off',
+      'no-unused-vars': 'off',
       '@typescript-eslint/no-shadow': 'error',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          ignoreRestSiblings: true,
+          args: "all",
+          argsIgnorePattern: "^_",
+          caughtErrors: "all",
+          caughtErrorsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          ignoreRestSiblings: true
         },
       ],
 
