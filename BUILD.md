@@ -1,3 +1,7 @@
+## Login
+
+`npm login`
+
 ## Bump version
 
 `npm version <patch | minor | major>`
