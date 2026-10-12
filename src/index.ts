@@ -668,7 +668,7 @@ export function CreateTable<T extends UserRow<T>>(t: DefinedTable<T> | (keyof T)
                 return () => {
                     unregisterTable(subscribe);
                 };
-            }, [t]);
+            }, []);
             return v;
         },
         useOne(where: Partial<T> | ((row: TableRow<T>) => boolean) | null = null, notify: TableNotify[] = []): TableRow<T> | undefined {
@@ -698,7 +698,7 @@ export function CreateTable<T extends UserRow<T>>(t: DefinedTable<T> | (keyof T)
                 return () => {
                     unregisterTable(subscribe);
                 };
-            }, [t]);
+            }, []);
             return v;
         },
         useLoadData(
@@ -753,6 +753,7 @@ export function CreateTable<T extends UserRow<T>>(t: DefinedTable<T> | (keyof T)
                         })
                         .finally(() => (isQuerying.current = false));
                 }
+                // eslint-disable-next-line react-hooks/exhaustive-deps -- refreshOn intentionally controls when this query reruns.
             }, ops.refreshOn);
 
             // similar to use(); responsible for updating the component when there are changes to the table
@@ -779,7 +780,7 @@ export function CreateTable<T extends UserRow<T>>(t: DefinedTable<T> | (keyof T)
                 return () => {
                     unregisterTable(subscribe);
                 };
-            }, [t]);
+            }, []);
             return { data, status, error };
         },
         useById(AUTOID: AUTOID, notify: RowNotify[] = []): TableRow<T> | undefined {
@@ -796,7 +797,7 @@ export function CreateTable<T extends UserRow<T>>(t: DefinedTable<T> | (keyof T)
                 return () => {
                     unregisterRow(AUTOID, subscribe);
                 };
-            }, [t, AUTOID]);
+            }, [AUTOID]);
             return v;
         },
         insertOne(newRow: T): TableRow<T> | undefined {

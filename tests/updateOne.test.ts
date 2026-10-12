@@ -1,6 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
 import { CreateStore, CreateTable } from "../src";
-import 'isomorphic-fetch'; // required because jest does not recognize node's global fetch API (even though it should when using node v18)
 
 type Cat = {
     name: string;

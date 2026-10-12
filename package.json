@@ -19,12 +19,12 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "test": "jest --transformIgnorePatterns 'node_modules/(?!node-fetch)/' --rootDir=./tests --watch index.test.ts",
-    "test-nested": "jest --transformIgnorePatterns 'node_modules/(?!node-fetch)/' --rootDir=./tests --watch nested.test.ts",
-    "test-silent": "jest --silent --transformIgnorePatterns 'node_modules/(?!node-fetch)/' --rootDir=./tests --watch index.test.ts",
+    "test": "jest --rootDir=./tests --watch index.test.ts",
+    "test-nested": "jest --rootDir=./tests --watch nested.test.ts",
+    "test-silent": "jest --silent --rootDir=./tests --watch index.test.ts",
     "test-build": "jest --silent --rootDir=./tests",
-    "test-use-one": "jest --transformIgnorePatterns 'node_modules/(?!node-fetch)/' --rootDir=./tests --watch useOne.test.ts",
-    "test-update-one": "jest --transformIgnorePatterns 'node_modules/(?!node-fetch)/' --rootDir=./tests --watch updateOne.test.ts",
+    "test-use-one": "jest --rootDir=./tests --watch useOne.test.ts",
+    "test-update-one": "jest --rootDir=./tests --watch updateOne.test.ts",
     "build-watch": "tsc -w",
     "build": "tsc",
     "prepare": "npm run build",
@@ -46,25 +46,26 @@
   "files": [
     "lib/**/*"
   ],
+  "dependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
   "devDependencies": {
-    "@eslint/js": "9.39.2",
-    "@testing-library/react": "16.3.2",
+    "@eslint/js": "9.39.5",
+    "@testing-library/react": "16.3.3",
     "@types/jest": "30.0.0",
-    "@types/react": "19.2.9",
-    "eslint": "9.39.2",
-    "eslint-plugin-react": "7.37.5",
-    "globals": "17.1.0",
-    "isomorphic-fetch": "3.0.0",
-    "jest": "30.2.0",
-    "jest-environment-jsdom": "30.2.0",
-    "jiti": "2.6.1",
+    "@types/react": "19.3.0",
+    "eslint": "9.39.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "17.13.0",
+    "jest": "30.5.2",
+    "jest-environment-jsdom": "30.5.2",
+    "jiti": "2.7.0",
     "json-server": "0.17.4",
-    "prettier": "3.8.1",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "ts-jest": "29.4.6",
-    "ts-node": "^10.9.2",
-    "typescript": "5.9.3",
-    "typescript-eslint": "8.53.1"
+    "prettier": "3.9.10",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "ts-jest": "29.4.14",
+    "typescript": "6.0.3",
+    "typescript-eslint": "^8.71.2"
   }
 }

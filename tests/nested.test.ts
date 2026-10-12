@@ -1,6 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
 import { CreateTable, CreateStore } from '../src';
-import 'isomorphic-fetch'; // required because jest does not recognize node's global fetch API (even though it should when using node v18)
 
 type CustomerBase = {
     customerID: number;

@@ -1,7 +1,7 @@
 import js from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import pluginReact from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 import type { Linter } from 'eslint';
 
 /**
@@ -11,12 +11,11 @@ import type { Linter } from 'eslint';
 export default [
   // Global Ignores
   { ignores: ['lib/', 'archive/'] },
-  { settings: { react: { version: 'detect' } } },
   { ...js.configs.recommended, files: ["**/*.{ts}"] }, // Apply JS recommended only to TS files
 
   // Base Configs
   ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
+  reactHooks.configs.flat.recommended,
 
   // Custom Rules & Settings
   {
@@ -41,8 +40,12 @@ export default [
           ignoreRestSiblings: true
         },
       ],
-
-      'react/react-in-jsx-scope': 'off', // Not needed with React 17+
     },
-  }
+  },
+  {
+    files: ["**/*.cjs"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
 ] satisfies Linter.Config[];

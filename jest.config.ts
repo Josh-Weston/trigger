@@ -5,7 +5,7 @@ const config: Config = {
     preset: "ts-jest",
 
     // Use jsdom to simulate the browser environment (DOM, window, document)
-    testEnvironment: "jsdom",
+    testEnvironment: "<rootDir>/jest-environment-jsdom-with-fetch.cjs",
 
     // Reset mocks between tests to prevent pollution
     clearMocks: true,
