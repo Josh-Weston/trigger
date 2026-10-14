@@ -2,11 +2,13 @@
     "cats": [
         {
             "name": "PJ",
-            "age": 7
+            "age": 7,
+            "props": null
         },
         {
             "name": "Cleo",
-            "age": 6
+            "age": 6,
+            "props": null
         }
     ]
 }

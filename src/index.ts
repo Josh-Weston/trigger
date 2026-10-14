@@ -53,35 +53,39 @@ type Subscribe<T> = {
 // SingleSubscribe is for "Single" data types in the Store (e.g., not tables)
 type SingleSubscribe<T> = (v: T) => void;
 
-type AllowedPrimitives<T> = T extends string
-    ? string
-    : T extends number
-      ? number
-      : T extends boolean
-        ? boolean
-        : T extends Date
-          ? Date
-          : T extends null
-            ? null
-            : never;
+// type AllowedPrimitives<T> = T extends string
+//     ? string
+//     : T extends number
+//     ? number
+//     : T extends boolean
+//     ? boolean
+//     : T extends Date
+//     ? Date
+//     : T extends null
+//     ? null
+//     : never;
 
-type IsAllowedObject<T> = T extends NewableFunction | CallableFunction | Map<unknown, unknown> | Set<unknown> | WeakMap<object, unknown> | WeakSet<object>
-    ? false
-    : true;
+// type IsAllowedObject<T> = T extends NewableFunction | CallableFunction | Map<unknown, unknown> | Set<unknown> | WeakMap<object, unknown> | WeakSet<object> | Promise<unknown> | RegExp | Error | symbol
+//     ? false
+//     : true;
 
-type AllowedType2<T> =
-    T extends AllowedPrimitives<T>
-        ? T
-        : T extends Array<infer U>
-          ? Array<AllowedType2<U>> // Note: UserRow<T> also works here
-          : IsAllowedObject<T> extends false
-            ? 'Functions, Maps, Sets, WeakMaps, and WeakSets are not allowed types in Trigger'
-            : UserRow<T>; // recursive
+// export type TriggerType<T> =
+//     T extends AllowedPrimitives<T>
+//     ? T
+//     : T extends Array<infer U>
+//     ? Array<TriggerType<U>> // Note: UserRow<T> also works here
+//     : IsAllowedObject<T> extends false
+//     ? 'Functions, Maps, Sets, WeakMaps, and WeakSets are not allowed types in Trigger'
+//     : UserRow<T>; // recursive
 
-// To avoid allowing symbols, something like: type UserRow<T extends Record<string, unknown>> is required, but it causes a lot of type issues at the moment
-type UserRow<T> = {
-    [P in keyof T]: AllowedType2<T[P]>;
-};
+// // To avoid allowing symbols, something like: type UserRow<T extends Record<string, unknown>> is required, but it causes a lot of type issues at the moment
+// type UserRow<T> = {
+//     [P in keyof T]: TriggerType<T[P]>;
+// };
+
+export type TriggerType = string | number | boolean | Date | null | TriggerType[] | { [key: string]: TriggerType };
+
+type UserRow = Record<string, TriggerType>;
 
 export type FetchStatus = 'idle' | 'error' | 'loading' | 'success';
 
@@ -125,7 +129,7 @@ type UpdateManyOptions = {
 
 export type DefinedTable<T> = { [K in keyof T]: T[K][] }; // This is narrowed during CreateTable to ensure it extends TableRow
 
-export type Table<T extends UserRow<T>> = {
+export type Table<T extends UserRow> = {
     use(where?: Partial<T> | ((row: TableRow<T>) => boolean) | null, notify?: TableNotify[]): TableRow<T>[];
     useOne(where?: Partial<T> | ((row: TableRow<T>) => boolean) | null, notify?: TableNotify[]): TableRow<T> | undefined;
     useById(_id: AUTOID, notify?: RowNotify[]): TableRow<T> | undefined;
@@ -192,7 +196,7 @@ function _checkTable<T>(t: DefinedTable<T>): number {
 }
 
 // This might work out that the triggers just need to send back the value, we don't need to provide the API because the user can do whatever they want as a normal function.
-export function CreateTable<T extends UserRow<T>>(t: DefinedTable<T> | (keyof T)[]): Table<T> {
+export function CreateTable<T extends UserRow>(t: DefinedTable<T> | (keyof T)[]): Table<T> {
     // turn t into an object if provided as an array of column names; will implicitly remove duplicate column names
     if (t instanceof Array) {
         t = t.reduce<{ [K in keyof T]: T[K][] }>((acc, cur) => {
@@ -1456,7 +1460,7 @@ export function CreateSingle<T>(s: T): Single<T> {
 }
 
 // Helper types to freeze Trigger managed types
-type IsTriggerType<T> = T extends ReturnType<() => UserRow<T>> ? true : T extends Queue<unknown> ? true : T extends Single<unknown> ? true : false;
+type IsTriggerType<T> = T extends UserRow ? true : T extends Queue<unknown> ? true : T extends Single<unknown> ? true : false;
 
 type TriggerStore<T> = {
     [K in keyof T]: IsTriggerType<T[K]> extends true ? Readonly<T[K]> : T[K];

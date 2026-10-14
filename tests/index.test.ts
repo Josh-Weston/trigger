@@ -1,5 +1,5 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import { CreateQueue, CreateSingle, CreateTable, CreateStore } from '../src';
+import { CreateQueue, CreateSingle, CreateTable, CreateStore, TriggerType } from '../src';
 
 type Customer = {
     customerID: number;
@@ -23,6 +23,7 @@ type Company = {
 type Cat = {
     name: string;
     age: number;
+    props: Record<string, TriggerType> | null;
 }
 
 const store = CreateStore({
@@ -30,7 +31,7 @@ const store = CreateStore({
         customers: CreateTable<Customer>(['customerID', 'firstName', 'lastName']),
         orders: CreateTable<Order>(['orderID', 'customerID', 'orderLocation', 'orderDate']),
         company: CreateTable<Company>({ companyID: [1, 2, 3], name: ['abc', 'def', 'ghi'], location: ['CA', 'US', 'EU'] }),
-        cat: CreateTable<Cat>(['name', 'age']),
+        cat: CreateTable<Cat>(['name', 'age', 'props']),
     },
     queues: {
         eventQueue: CreateQueue<string>(),
@@ -735,10 +736,11 @@ describe('Integration tests for useLoadData()', () => {
         const parsed = JSON.parse(jsonString);
         expect(parsed.length).toEqual(2);
         expect(parsed[0]._id).toEqual(undefined);
+        expect(parsed[0].props).toBeNull();
     });
 
     it('should replace the _id when passed in', async () => {
-        store.tables.cat.insertOne({ _id: 99, name: 'Cleo', age: 10 } as Cat);
+        store.tables.cat.insertOne({ _id: 99, name: 'Cleo', age: 10, props: null } as Cat);
         const cats = store.tables.cat.find();
         expect(cats.length).toEqual(3);
         expect(cats[2]._id).toEqual(3);
