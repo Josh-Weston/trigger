@@ -2,12 +2,10 @@
 type AUTOID = number;
 type TableNotify = 'onInsert' | 'onDelete' | 'onUpdate';
 type RowNotify = 'onUpdate' | 'onDelete';
-type AllowedPrimitives<T> = T extends string ? string : T extends number ? number : T extends boolean ? boolean : T extends Date ? Date : T extends null ? null : never;
-type IsAllowedObject<T> = T extends NewableFunction | CallableFunction | Map<unknown, unknown> | Set<unknown> | WeakMap<object, unknown> | WeakSet<object> ? false : true;
-type AllowedType2<T> = T extends AllowedPrimitives<T> ? T : T extends Array<infer U> ? Array<AllowedType2<U>> : IsAllowedObject<T> extends false ? 'Functions, Maps, Sets, WeakMaps, and WeakSets are not allowed types in Trigger' : UserRow<T>;
-type UserRow<T> = {
-    [P in keyof T]: AllowedType2<T[P]>;
+export type TriggerType = string | number | boolean | Date | null | TriggerType[] | {
+    [key: string]: TriggerType;
 };
+type UserRow = Record<string, TriggerType>;
 export type FetchStatus = 'idle' | 'error' | 'loading' | 'success';
 export type TableRow<T> = {
     [K in keyof T]: T[K];
@@ -50,7 +48,7 @@ type UpdateManyOptions = {
 export type DefinedTable<T> = {
     [K in keyof T]: T[K][];
 };
-export type Table<T extends UserRow<T>> = {
+export type Table<T extends UserRow> = {
     use(where?: Partial<T> | ((row: TableRow<T>) => boolean) | null, notify?: TableNotify[]): TableRow<T>[];
     useOne(where?: Partial<T> | ((row: TableRow<T>) => boolean) | null, notify?: TableNotify[]): TableRow<T> | undefined;
     useById(_id: AUTOID, notify?: RowNotify[]): TableRow<T> | undefined;
@@ -83,7 +81,7 @@ export type Table<T extends UserRow<T>> = {
     clear(resetIndex?: boolean): void;
     scan(fn: (row: TableRow<T>, idx: number) => boolean | void): void;
 };
-export declare function CreateTable<T extends UserRow<T>>(t: DefinedTable<T> | (keyof T)[]): Table<T>;
+export declare function CreateTable<T extends UserRow>(t: DefinedTable<T> | (keyof T)[]): Table<T>;
 export type QueueItem<T> = {
     item: T;
     cb?: (ok: boolean) => void;
@@ -110,7 +108,7 @@ export type Single<T> = {
     get(): T;
 };
 export declare function CreateSingle<T>(s: T): Single<T>;
-type IsTriggerType<T> = T extends ReturnType<() => UserRow<T>> ? true : T extends Queue<unknown> ? true : T extends Single<unknown> ? true : false;
+type IsTriggerType<T> = T extends UserRow ? true : T extends Queue<unknown> ? true : T extends Single<unknown> ? true : false;
 type TriggerStore<T> = {
     [K in keyof T]: IsTriggerType<T[K]> extends true ? Readonly<T[K]> : T[K];
 };
